@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="assets/javascript/game.js"></script>
+</head>
+<body>
+    <div class="container-fluid" id="game">
+        <div class="row">
+            <div class="col-12"><h1>Choose an attacker:</h1></div>
+        </div>
+        <div class="row" id="characters">
+            <div class="col-2"></div>
+            <div class="col-2 character center" id="char1">
+                <div class="char-name">Captain America</div>
+                <img src="assets/images/capt.jpg">
+                <div class="char-health">120</div>
+            </div>
+            <div class="col-2 character center" id="char2">
+                <div class="char-name">Hulk</div>
+                <img src="assets/images/hulk.jpg">
+                <div class="char-health">100</div>
+            </div>
+            <div class="col-2 character center" id="char3">
+                <div class="char-name">Iron Man</div>
+                <img src="assets/images/ironman.jpg">
+                <div class="char-health">150</div>
+            </div>
+            <div class="col-2 character center" id="char4">
+                <div class="char-name">Thor</div>
+                <img src="assets/images/thor.jpg">
+                <div class="char-health">180</div>
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <div class="row" id="fight-section">
+            <div class="col-2"></div>
+            <div class="col-2 center" id="attacker"></div>
+            <div class="col-4">
+                <span>Fight section:</span>
+                <div id="fight">
+                    <div class="jumbotron"></div>
+                    <button id="attack">Attack</button>
+                </div>
+            </div>
+            <div class="col-2 center" id="defender"></div>
+        </div>
+    </div>
+    
+</body>
+</html>
