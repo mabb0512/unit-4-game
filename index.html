@@ -11,10 +11,14 @@
     <script src="assets/javascript/game.js"></script>
 </head>
 <body>
+        
     <div class="container-fluid" id="game">
-        <div class="row">
-            <div class="col-12"><h1>Choose an attacker:</h1></div>
-        </div>
+        <header class="bg-1">
+            <h1 class="text-center">Avengers RPG Game</h1>
+            <p>
+                <h4>Choose an attacker:</h4>
+            </p>
+        </header>
         <div class="row" id="characters">
             <div class="col-2"></div>
             <div class="col-2 character center" id="char1">
@@ -38,6 +42,11 @@
                 <div class="char-health">180</div>
             </div>
             <div class="col-2"></div>
+        </div>
+        <hr>
+        <div class="row" id="chosen-characters">
+            <div class="col-6 center"><h3 id="chosen-attacker"></h3></div>
+            <div class="col-6 center"><h3 id="chosen-defender"></h3></div>
         </div>
         <div class="row" id="fight-section">
             <div class="col-2"></div>
