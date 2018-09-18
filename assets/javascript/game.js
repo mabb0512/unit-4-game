@@ -39,6 +39,34 @@ $(document).ready(function() {
     var chosenDefender = {};
     var chosen;
 
+    //function to play punch audio
+    function punchAudio () {
+
+      var punchAudio = document.getElementById("punchAudio"); 
+      punchAudio.play();
+    }
+
+    //function to play winning audio
+    function youWinAudio () {
+
+      var winAudio = document.getElementById("winAudio"); 
+      winAudio.play();
+    }
+
+    //function to play loser audio
+    function youLoseAudio () {
+      
+      var loseAudio = document.getElementById("loseAudio"); 
+      loseAudio.play();
+    }
+
+    //function to play loser audio
+    function cheerAudio () {
+  
+      var cheerAudio = document.getElementById("cheerAudio"); 
+      cheerAudio.play();
+    }
+
     //function to check if object is empty
     function isEmpty(obj) {
       for(var key in obj) {
@@ -50,6 +78,7 @@ $(document).ready(function() {
       return true;
     }
 
+    //function to restart the game
     function restart() {
 
       $(document).on("click", "#restart", function() {
@@ -59,6 +88,7 @@ $(document).ready(function() {
       });
     }
 
+    //function to add defenders to fight with
     function addDefender(chosen) {
 
       //save chosen defender
@@ -78,9 +108,9 @@ $(document).ready(function() {
       //hide remaining characters
       $("h4").text("Time to fight!!");
       fight();
-
     }
 
+    //click on character to start
     $(document).on("click", ".character", function() {
 
       var newAttack = 0;
@@ -93,6 +123,7 @@ $(document).ready(function() {
       var divResult = $("#result");
       divResult.empty();
 
+      //check if attacker has been chosen to set initial values and move to fight area
       if (isEmpty(chosenAttacker)) {
 
         //save chosen attacker
@@ -115,6 +146,7 @@ $(document).ready(function() {
         
       }
 
+      //checks if defender has been chosen to set initials values and move to fight area
       else if (isEmpty(chosenDefender)) {
 
         $("h4").text("Choose a defender:");
@@ -137,100 +169,103 @@ $(document).ready(function() {
         //hide remaining characters
         $("h4").text("Time to fight!!");
 
-      //add attack button
-      var attackButton = $("<button id='attack'>Attack</button>");
-      var divFight = $("#fight");
+        //add attack button
+        var attackButton = $("<button id='attack'>Attack</button>");
+        var divFight = $("#fight");
 
-      divFight.append(attackButton);
+        divFight.append(attackButton);
 
-      attack = chosenAttacker.attack;
-      attackBack = chosenDefender.attackBack;
+        attack = chosenAttacker.attack;
+        attackBack = chosenDefender.attackBack;
 
-      $(document).on("click", "#attack", function (){
+        $(document).on("click", "#attack", function (){
 
-        //health values
-        var divHealthAttacker = $('#attacker').find('.char-health');
-        var attackersHealth = parseInt(divHealthAttacker.text());
-        var divHealthDefender = $('#defender').find('.char-health');
-        var defendersHealth = parseInt(divHealthDefender.text());
+          //health values
+          var divHealthAttacker = $('#attacker').find('.char-health');
+          var attackersHealth = parseInt(divHealthAttacker.text());
+          var divHealthDefender = $('#defender').find('.char-health');
+          var defendersHealth = parseInt(divHealthDefender.text());
 
-        if (attackersHealth > 0) {
+          if (attackersHealth > 0) {
 
-          newAttack = newAttack + 1;
+            punchAudio();
+            newAttack = newAttack + 1;
 
-          if (newAttack > 1) {
-            counter = counter * 2;
-          }
+            if (newAttack > 1) {
+              counter = counter * 2;
+            }
 
-          else {
-            counter = chosenAttacker.attack;
-          }
-             
-          //reset health values
-          attackersHealth = attackersHealth - attackBack;
-          defendersHealth = defendersHealth - counter;
+            else {
+              counter = chosenAttacker.attack;
+            }
+              
+            //reset health values
+            attackersHealth = attackersHealth - attackBack;
+            defendersHealth = defendersHealth - counter;
 
-          //add new value of health to corresponding div
-          divHealthAttacker.text(attackersHealth);
-          divHealthDefender.text(defendersHealth);
+            //add new value of health to corresponding div
+            divHealthAttacker.text(attackersHealth);
+            divHealthDefender.text(defendersHealth);
 
-          //result message
-          divResult.text ("You attacked " + chosenDefender.name + " for " + counter + " damage. " + 
-                          chosenDefender.name + " attacked you back for " + attackBack + " damage.");
-        }
-
-        if (defendersHealth < 0) {
-
-          chosenAttacker.attack = chosenAttacker.attack + 8;
-          divHealthDefender.text(0);
-
-          var num = $("#characters").find($(".character")).length;
-
-          if (num == 0) {
             //result message
-            divResult.text ("You have defeted " + $('#defender').find('.char-name').text() + ". You won the game "
-                          +"press restart to play again");
+            divResult.text ("You attacked " + chosenDefender.name + " for " + counter + " damage. " + 
+                            chosenDefender.name + " attacked you back for " + attackBack + " damage.");
 
+          }
+
+          if (defendersHealth < 0) {
+
+            chosenAttacker.attack = chosenAttacker.attack + 4;
+            divHealthDefender.text(0);
+
+            var defendersLeft = $("#characters").find($(".character")).length;
+
+            if (defendersLeft == 0) {
+
+              youWinAudio()
+              //result message
+              divResult.text ("You have defeted " + $('#defender').find('.char-name').text() + ". You won the game "
+                            +"press restart to play again ");
+
+              divResult.append($($("<button id='restart'>Restart</button>")));
+
+              restart();
+            }
+
+            else {
+
+              cheerAudio();
+              //result message
+              divResult.text ("You have defeted " + $('#defender').find('.char-name').text() + ". You can choose to fight another "
+              +"enemy. Your attack power has been increased");
+            }
+
+            chosenAttacker.health = attackersHealth;
+
+            $("#attack").remove();
+            chosenDefender = {};
+            newAttack = 0;
+            counter = 0;
+            attackBack = 0;
+          }
+
+          if (attackersHealth <= 0) {
+
+            divHealthDefender.text(0);
+
+            youLoseAudio();
+            //result message
+            divResult.text ("You have been defeted. GAME OVER!!" );
+
+            $("#attack").remove();
+
+            //add reset button
             divResult.append($($("<button id='restart'>Restart</button>")));
-            
+
             restart();
           }
-
-          else {
-
-            //result message
-            divResult.text ("You have defeted " + $('#defender').find('.char-name').text() + ". You can choose to fight another "
-            +"enemy. Your attack power has been increased");
-          }
-
-
-          chosenAttacker.health = attackersHealth;
-
-          $("#attack").remove();
-          chosenDefender = {};
-          newAttack = 0;
-          counter = 0;
-          attackBack = 0;
-        }
-
-        if (attackersHealth <= 0) {
-
-          divHealthDefender.text(0);
-
-          //result message
-          divResult.text ("You have been defeted. GAME OVER!!" );
-
-          $("#attack").remove();
-
-          //add reset button
-          divResult.append($($("<button id='restart'>Restart</button>")));
-
-          restart();
-        }
-        
-
-      });
-    }
+          
+        });
+      }
     });
-
   });

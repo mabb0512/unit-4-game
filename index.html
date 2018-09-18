@@ -11,7 +11,22 @@
     <script src="assets/javascript/game.js"></script>
 </head>
 <body>
-        
+    <audio id="punchAudio">
+        <source src="assets/audio/punch.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="winAudio">
+        <source src="assets/audio/winning.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="loseAudio">
+        <source src="assets/audio/losing.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="cheerAudio">
+        <source src="assets/audio/cheer.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
     <div class="container-fluid" id="game">
         <header class="bg-1">
             <h1 class="text-center">Avengers RPG Game</h1>
@@ -55,7 +70,6 @@
                 <span>Score:</span>
                 <div id="fight">
                     <div class="jumbotron" id="result"></div>
-                    
                 </div>
             </div>
             <div class="col-2 center" id="defender"></div>
